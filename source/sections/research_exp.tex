@@ -17,19 +17,19 @@
       \resumeItem{\textbf{Sample-efficient RL finetuning of pretrained VLAs} in the real world. \publink{expo-ft}}
       \resumeSubItemListStart
         \resumeSubItem{Built a stable RL finetuning system with residual action edits and Q-guided sampling.}
-        \resumeSubItem{Reached 30/30 success on all tasks with 19 min of online data on average; code open-sourced.}
+        \resumeSubItem{Reached 30/30 success on all tasks with 19 min of online data on average.}
       \resumeSubItemListEnd
       }
       \tagged{engineer}{%
-      \resumeItem{\textbf{Real-time VLA control under inference latency.} \publink{real-expo-ft}}
+      \resumeItem{\textbf{Real-time VLA control at 30\,Hz under inference latency.} \publink{real-expo-ft}}
       \resumeSubItemListStart
-        \resumeSubItem{Built an asynchronous execution system: slow VLA inference and a fast edit policy run as concurrent processes over a shared latest-observation buffer, so the control loop never blocks on the model.}
+        \resumeSubItem{Overlapped VLA inference with chunk execution on a background thread, inpainting each chunk on the executed action prefix so the 30\,Hz control loop never stalls at a replan boundary.}
         \resumeSubItem{Raised success rate from 42\% to 97\% on four dynamic real-world tasks with 10 min of robot data.}
       \resumeSubItemListEnd
-      \resumeItem{\textbf{Asynchronous RL finetuning system for pretrained VLAs on real robots.} \publink{expo-ft}}
+      \resumeItem{\textbf{Asynchronous RL finetuning system for VLAs on real robots.} \publink{expo-ft}}
       \resumeSubItemListStart
-        \resumeSubItem{Built the training stack end to end: concurrent data collection and learning, residual action edits, and Q-guided sampling, with a client-server interface between the learner and the robot.}
-        \resumeSubItem{Reached 30/30 success on all tasks with 19 min of online data on average; open-sourced.}
+        \resumeSubItem{Built a server-client stack over WebSocket: a multi-GPU learner with sampler and updater on separate devices, training against a DROID Franka actor with ZED cameras and SpaceMouse teleoperation.}
+        \resumeSubItem{Reached 30/30 success on all tasks with 19 min of online data on average.}
       \resumeSubItemListEnd
       }
       \resumeItem{\textbf{Scaling Q-functions} with Transformers in offline RL. \publink{tql}}
