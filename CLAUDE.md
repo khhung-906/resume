@@ -37,9 +37,9 @@ later; until it does, a change to one must be mirrored in the other. Check this 
 you touch either `\input` list.
 
 `\cvdoclabel` sets the footer: `CV` for the three `*_cv` variants, `Resume` for
-`robot_resume`. `\cvvariant` is set in every file but **currently unused** — the
-`\tagged` macro is not wired up, because every difference so far is section-level
-(Level 1).
+`robot_resume`. `\cvvariant` drives `\tagged`, which **is** wired up in
+`preamble.tex`. It is currently used in exactly one place: the CSIE1000 teaching entry
+is `\tagged{phd}`, because only `phd_cv` has room for a second TA entry.
 
 ## Build
 
@@ -80,8 +80,8 @@ differ between variants in three ways, and all three are normal:
   `sections/skills.tex`. Use this sparingly; it is the one place duplicate prose is
   tolerated, and the two files must be updated together.
 
-**Level 2 — entries and bullets: the `\tagged` macro.** Content carries its audience and
-is still stored once:
+**Level 2 — entries and bullets: the `\tagged` macro** (wired up in `preamble.tex`).
+Content carries its audience and is still stored once:
 
 ```latex
 \tagged{research,academic}{\resumeItem{Introduced attention entropy regularization...}}

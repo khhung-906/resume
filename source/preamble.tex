@@ -181,6 +181,20 @@
 % instead of printing [??]. Needs the second latexmk pass to resolve.
 \newcommand{\publink}[1]{\ifcsname r@#1\endcsname\textcolor{blue}{[\ref{#1}]}\fi}
 
+% ---- variant tagging -------------------------------------------------
+% \tagged{tag,tag}{content} emits content only when \cvvariant matches one
+% of the tags. \cvvariant is \def'd in each variant file before \input{preamble};
+% the \providecommand below is only a fallback. \cvvariant=full matches everything.
+\usepackage{etoolbox}
+\providecommand{\cvvariant}{full}
+\newtoggle{cvmatch}
+\newcommand{\cvchecktag}[1]{\ifdefstring{\cvvariant}{#1}{\toggletrue{cvmatch}}{}}
+\newcommand{\tagged}[2]{%
+  \togglefalse{cvmatch}%
+  \ifdefstring{\cvvariant}{full}{\toggletrue{cvmatch}}{\forcsvlist{\cvchecktag}{#1}}%
+  \iftoggle{cvmatch}{#2}{}%
+}
+
 \newcommand{\resumeSkillPair}[4]{
   \noindent\makebox[\textwidth][s]{%
     {\small \textbf{#1}: #2 \hfill \textbf{#3}: #4}%
