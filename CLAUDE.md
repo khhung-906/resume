@@ -24,12 +24,12 @@ ordered `\input` list. It holds no prose. All prose lives in `sections/`, writte
 
 | File | Audience | Section order |
 |---|---|---|
-| `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Awards |
-| `robot_research_cv.tex` | Robotics research roles | Same, **plus Technical Skills** at the end |
-| `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Work, Publications, Teaching, Awards |
-| `robot_resume.tex` | Robotics roles, resume format | Shortest: `research_exp_short`, no Teaching/Awards sections, publications [1]-[5] only, awards as one line in Education |
+| `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Service, Awards |
+| `robot_research_cv.tex` | Robotics research roles | Education, **Skills**, Publications, Research, Work, Service, Awards |
+| `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Work, Publications, Awards |
+| `robot_resume.tex` | Robotics roles, resume format | Education, Skills, Research (short), Work, Publications — **1 page** |
 
-All four are currently 2 pages with zero Overfull boxes.
+The three CVs are 2 pages; robot_resume is 1. All have zero Overfull boxes.
 
 **`robot_resume.tex` has diverged from `robot_engineer_cv.tex`** and is now maintained
 separately. It targets one page: it uses `sections/research_exp_short.tex` (one line per
