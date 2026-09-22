@@ -27,19 +27,21 @@ ordered `\input` list. It holds no prose. All prose lives in `sections/`, writte
 | `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Awards |
 | `robot_research_cv.tex` | Robotics research roles | Same, **plus Technical Skills** at the end |
 | `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Work, Publications, Teaching, Awards |
-| `robot_resume.tex` | Robotics roles, resume format | Identical to `robot_engineer_cv.tex` for now |
+| `robot_resume.tex` | Robotics roles, resume format | Shortest: `research_exp_short`, no Teaching/Awards sections, publications [1]-[5] only, awards as one line in Education |
 
 All four are currently 2 pages with zero Overfull boxes.
 
-**`robot_resume.tex` and `robot_engineer_cv.tex` are byte-identical apart from
-`\cvvariant` and `\cvdoclabel`.** They are separate files so the resume can diverge
-later; until it does, a change to one must be mirrored in the other. Check this whenever
-you touch either `\input` list.
+**`robot_resume.tex` has diverged from `robot_engineer_cv.tex`** and is now maintained
+separately. It targets one page: it uses `sections/research_exp_short.tex` (one line per
+project, Embodied AI Lab omitted), drops the Teaching and Awards sections, and shows only
+publications [1]-[5].
 
 `\cvdoclabel` sets the footer: `CV` for the three `*_cv` variants, `Resume` for
 `robot_resume`. `\cvvariant` drives `\tagged`, which **is** wired up in
 `preamble.tex`. It is currently used in exactly one place: the CSIE1000 teaching entry
-is `\tagged{phd}`, because only `phd_cv` has room for a second TA entry.
+is `\tagged{phd}`, because only `phd_cv` has room for a second TA entry. Publications [6]
+and [7] are `\tagged{phd,research,engineer}` to keep them off the resume, and the one-line
+awards entry in `education.tex` is `\tagged{resume}`.
 
 ## Build
 
