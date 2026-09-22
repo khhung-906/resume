@@ -26,7 +26,7 @@ ordered `\input` list. It holds no prose. All prose lives in `sections/`, writte
 |---|---|---|
 | `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Service, Awards |
 | `robot_research_cv.tex` | Robotics research roles | Education, **Skills**, Publications, Research, Work, Service, Awards |
-| `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Work, Publications, Awards |
+| `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Publications, Work, Awards |
 | `robot_resume.tex` | Robotics roles, resume format | Education, Skills, Research (short), Work, Publications — **1 page** |
 
 The three CVs are 2 pages; robot_resume is 1. All have zero Overfull boxes.
