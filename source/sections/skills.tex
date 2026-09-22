@@ -1,6 +1,13 @@
 \section{Technical Skills}
 \resumeFlatListStart
+\ifcvresume
+    % Resume: two lines. Infrastructure folded into the parallel line; JavaScript,
+    % Git and Azure dropped as the least relevant to an ML/robotics engineering read.
+    \resumeItem{\textbf{Systems \& Parallel:} PyTorch DDP/FSDP, Ray, SLURM, multiprocessing, vectorized envs, ROS, Docker, Linux.}
+    \resumeItem{\textbf{Languages \& Frameworks:} Python, C/C++, Golang, SQL, Bash, PyTorch, JAX, NumPy.}
+\else
     \resumeItem{\textbf{Parallel \& Distributed:} PyTorch DDP/FSDP, Ray, SLURM, multiprocessing/asyncio, vectorized envs.}
     \resumeItem{\textbf{Robotics \& Infrastructure:} ROS, Linux, Docker, Git, Azure.}
     \resumeItem{\textbf{Languages \& Frameworks:} Python, C/C++, Golang, JavaScript, SQL, Bash, PyTorch, JAX, NumPy.}
+\fi
 \resumeFlatListEnd
