@@ -6,28 +6,40 @@ content.
 ## Layout
 
 ```
-pdf/                       built PDFs, one per variant (gitignored source aside)
+pdf/                       built PDFs, one per variant
 source/
   preamble.tex             \documentclass, packages, custom macros
-  main.tex                 variant: PhD applications
-  job_robot_research.tex   variant: robotics research roles
-  job_robot_engineer.tex   variant: robotics engineering roles
+  phd_cv.tex               variant: PhD applications
+  robot_research_cv.tex    variant: robotics research roles
+  robot_engineer_cv.tex    variant: robotics engineering roles
+  robot_resume.tex         variant: robotics roles, resume format
   sections/*.tex           the content, single source of truth
   build/                   latexmk scratch (gitignored)
 ```
 
-A **variant file** is thin: a `\def\cvvariant`, the preamble, and an ordered `\input`
-list. It holds no prose. All prose lives in `sections/`, written once.
+A **variant file** is thin: `\def\cvvariant`, `\def\cvdoclabel`, the preamble, and an
+ordered `\input` list. It holds no prose. All prose lives in `sections/`, written once.
 
-### The three variants
+### The four variants
 
-| File | Audience | Differences |
+| File | Audience | Section order |
 |---|---|---|
-| `main.tex` | PhD applications | No Technical Skills, Summary or Projects |
-| `job_robot_research.tex` | Robotics research roles | PhD ordering **plus** Technical Skills at the end |
-| `job_robot_engineer.tex` | Robotics engineering roles | Research Experience above Publications; Technical Skills directly after Education |
+| `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Awards |
+| `robot_research_cv.tex` | Robotics research roles | Same, **plus Technical Skills** at the end |
+| `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Work, Publications, Teaching, Awards |
+| `robot_resume.tex` | Robotics roles, resume format | Identical to `robot_engineer_cv.tex` for now |
 
-All three are currently 2 pages with zero Overfull boxes.
+All four are currently 2 pages with zero Overfull boxes.
+
+**`robot_resume.tex` and `robot_engineer_cv.tex` are byte-identical apart from
+`\cvvariant` and `\cvdoclabel`.** They are separate files so the resume can diverge
+later; until it does, a change to one must be mirrored in the other. Check this whenever
+you touch either `\input` list.
+
+`\cvdoclabel` sets the footer: `CV` for the three `*_cv` variants, `Resume` for
+`robot_resume`. `\cvvariant` is set in every file but **currently unused** — the
+`\tagged` macro is not wired up, because every difference so far is section-level
+(Level 1).
 
 ## Build
 
@@ -35,7 +47,7 @@ Run **from `source/`** — every `\input` path is relative to the variant file, 
 `source/.latexmkrc` supplies the output paths.
 
 ```bash
-cd source && latexmk -interaction=nonstopmode job_robot_engineer.tex
+cd source && latexmk -interaction=nonstopmode robot_engineer_cv.tex
 ```
 
 `.latexmkrc` pins three things, so don't pass `-pdf`, `-outdir` or `-auxdir` by hand:
@@ -96,10 +108,9 @@ wording. Rare. Do not reach for it before Levels 1 and 2.
 
 - **Never fork a whole variant into its own copy of the content.** Content drift is the
   exact failure this structure exists to prevent.
-- **Build all three after any `sections/` edit.** There is no master "shows everything"
+- **Build all four after any `sections/` edit.** There is no master "shows everything"
   variant, so content that falls out of every `\input` list is invisible until someone
-  greps for it. `\cvvariant` is currently set but unused — the `\tagged` macro is not
-  wired up yet, because every difference so far is section-level (Level 1).
+  greps for it.
 - **Tag by audience, never by company.** `research`, `industry`, `mleng` — not `deepmind`,
   `openai`. Company tags multiply without bound and end as forked copies.
 - **A `\tagged` block that empties a list breaks the build.** If every bullet inside a
@@ -167,11 +178,11 @@ publication in `publication.tex` is commented out.
 
 ## After editing
 
-Rebuild **every** variant — a change to any `sections/` file affects all three — and read
+Rebuild **every** variant — a change to any `sections/` file affects all four — and read
 the logs:
 
 ```bash
-cd source && for v in main job_robot_research job_robot_engineer; do
+cd source && for v in phd_cv robot_research_cv robot_engineer_cv robot_resume; do
   latexmk -interaction=nonstopmode "$v.tex" >/dev/null 2>&1
   echo "[$v] $(grep -oE '\([0-9]+ pages' build/$v.log | tr -d '(')" \
        "overfull=$(grep -cE '^(Overfull|Underfull)' build/$v.log)" \
@@ -179,7 +190,7 @@ cd source && for v in main job_robot_research job_robot_engineer; do
 done
 ```
 
-All three must stay at **2 pages, overfull=0, undefrefs=0**.
+All four must stay at **2 pages, overfull=0, undefrefs=0**.
 
 Note that `grep -c undefined` over the log also matches a harmless pre-existing
 `Font shape OT1/cmr/bx/sc undefined` warning — match `Reference.*undefined` for real
@@ -187,5 +198,5 @@ broken cross-references.
 
 **Reordering sections changes pagination.** Moving Research Experience above Publications
 in the engineer variant pushed Technical Skills onto a third page; moving Skills up to sit
-directly after Education fixed it (and suits that audience anyway). Always rebuild and
-check the page count after changing an `\input` order.
+directly after Education fixed it. Always rebuild and check page counts after changing an
+`\input` order.

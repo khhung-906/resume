@@ -35,7 +35,9 @@
 
 \pagestyle{fancy}
 \fancyhf{} % clear all header and footer fields
-\fancyfoot[C]{\small \textcolor{black}{Kuo-Han Hung · Resume}}
+% Overridden per variant; see the \def\cvdoclabel line in each variant file.
+\providecommand{\cvdoclabel}{CV}
+\fancyfoot[C]{\small \textcolor{black}{Kuo-Han Hung · \cvdoclabel}}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
