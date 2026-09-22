@@ -5,6 +5,15 @@
 % License : MIT
 %------------------------
 
+% ---- variant switch -------------------------------------------------
+% \cvvariant is \def'd by each variant file before \input{preamble}. Plain \ifx is
+% used rather than etoolbox's \ifdefstring because this has to work before any
+% \usepackage has run.
+\providecommand{\cvvariant}{full}
+\def\cvresumename{resume}
+\newif\ifcvresume
+\ifx\cvvariant\cvresumename \cvresumetrue \fi
+
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{latexsym}
@@ -27,7 +36,11 @@
  % page number in center of footer
 
 % Adjust margins
-\usepackage[left=0.68in,right=0.68in,top=0.8in,bottom=0.7in,footskip=0.40in]{geometry}
+\ifcvresume
+  \usepackage[left=0.5in,right=0.5in,top=0.45in,bottom=0.45in,footskip=0.25in]{geometry}
+\else
+  \usepackage[left=0.68in,right=0.68in,top=0.8in,bottom=0.7in,footskip=0.40in]{geometry}
+\fi
 
 
 \input{glyphtounicode}
@@ -48,9 +61,15 @@
 \setlength{\tabcolsep}{0in}
 
 % Sections formatting
-\titleformat{\section}{
-  \vspace{-6pt}\scshape\raggedright\large\bfseries
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+\ifcvresume
+  \titleformat{\section}{
+    \vspace{-10pt}\scshape\raggedright\large\bfseries
+  }{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+\else
+  \titleformat{\section}{
+    \vspace{-6pt}\scshape\raggedright\large\bfseries
+  }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+\fi
 
 % Ensure that generate pdf is machine readable/ATS parsable
 \pdfgentounicode=1
