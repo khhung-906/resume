@@ -39,7 +39,7 @@
 \ifcvresume
   \usepackage[left=0.5in,right=0.5in,top=0.3in,bottom=0.32in,footskip=0.18in]{geometry}
 \else
-  \usepackage[left=0.6in,right=0.6in,top=0.8in,bottom=0.7in,footskip=0.40in]{geometry}
+  \usepackage[left=0.6in,right=0.6in,top=0.62in,bottom=0.62in,footskip=0.35in]{geometry}
 \fi
 
 
@@ -111,7 +111,12 @@
 }
 
 % Subitem list start and end
-\newcommand{\resumeSubItemListStart}{\begin{itemize}[leftmargin=1.em, label=-]}
+% Keep an entry with its sub-bullets: \@beginparpenalty blocks a break between the
+% parent \resumeItem and this list, \@itempenalty blocks one between sub-bullets.
+% Without these LaTeX splits an entry across pages, orphaning a single sub-bullet.
+\makeatletter
+\newcommand{\resumeSubItemListStart}{\@beginparpenalty=10000\relax\begin{itemize}[leftmargin=1.em, label=-]\@itempenalty=10000\relax}
+\makeatother
 \newcommand{\resumeSubItemListEnd}{\vspace{-1pt}\end{itemize}}
 
 % Subitem

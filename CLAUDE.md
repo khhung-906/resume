@@ -25,7 +25,7 @@ ordered `\input` list. It holds no prose. All prose lives in `sections/`, writte
 | File | Audience | Section order |
 |---|---|---|
 | `phd_cv.tex` | PhD applications | Education, Publications, Research, Work, Teaching, Service, Awards |
-| `robot_research_cv.tex` | Robotics research roles | Education, **Skills**, Publications, Research, Work, Service, Awards |
+| `robot_research_cv.tex` | Robotics research roles | Education, **Skills**, Publications, Research, Work, Awards |
 | `robot_engineer_cv.tex` | Robotics engineering roles | Education, **Skills**, **Research**, Publications, Work, Awards |
 | `robot_resume.tex` | Robotics roles, resume format | Education, Skills, Research (short), Work, Publications — **1 page** |
 
@@ -200,6 +200,12 @@ All four must stay at **2 pages, overfull=0, undefrefs=0**.
 Note that `grep -c undefined` over the log also matches a harmless pre-existing
 `Font shape OT1/cmr/bx/sc undefined` warning — match `Reference.*undefined` for real
 broken cross-references.
+
+**An entry must not split across pages.** `\resumeSubItemListStart` sets
+`\@beginparpenalty` and `\@itempenalty` to 10000 so LaTeX cannot break between a
+`\resumeItem` and its sub-bullets, or between sub-bullets. Without them a page break
+orphans a single sub-bullet at the top of page 2. After any content change, check that
+page 2 does not start with a line beginning `-`.
 
 **Reordering sections changes pagination.** Moving Research Experience above Publications
 in the engineer variant pushed Technical Skills onto a third page; moving Skills up to sit
