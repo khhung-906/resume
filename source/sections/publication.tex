@@ -68,15 +68,16 @@
     {aed}
 }
 
-  % Deliberately excluded: a maps/routing paper is off-topic for robotics, and
-  % including it pushes the three job variants to 3 pages. \publink{route} in
-  % work_exp.tex renders nothing while this is commented out (the \publink guard).
-  % \resumePubItem
-  %   {\textbf{Kuo-Han Hung}, Chiqun Zhang, and Dragomir Yankov}
-  %   {Customizable Routing with Learning from Past Recommendations}
-  %   {International Conference on Advances in Geographic Information Systems (\textbf{SIGSPATIAL}), 2024}
-  %   {https://dl.acm.org/doi/10.1145/3678717.3691327}
-  %   {route}
+  % Engineer CV only: a maps/routing paper is off-topic for the academic and research
+  % variants, but it backs the Microsoft Dijkstra bullet on the engineering one.
+  \tagged{engineer}{%
+  \resumePubItem
+    {\textbf{Kuo-Han Hung}, Chiqun Zhang, and Dragomir Yankov}
+    {Customizable Routing with Learning from Past Recommendations}
+    {\cvalt{International Conference on Advances in Geographic Information Systems (\textbf{SIGSPATIAL}), 2024}{\textbf{SIGSPATIAL} 2024}}
+    {https://dl.acm.org/doi/10.1145/3678717.3691327}
+    {route}
+  }
 
   % \resumePubItem
   %   {H. C. Fang*, \textbf{K. H. Hung*}, C. W. Huang, and Y. N. Chen}
