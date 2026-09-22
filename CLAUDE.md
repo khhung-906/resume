@@ -6,34 +6,28 @@ content.
 ## Layout
 
 ```
+pdf/                       built PDFs, one per variant (gitignored source aside)
 source/
-  preamble.tex           \documentclass, packages, custom macros, tag machinery
-  cv-full.tex            variant entry point: \def\cvvariant + \input list
-  cv-research.tex        "
-  cv-industry.tex        "
-  sections/*.tex         the content, single source of truth, tagged per audience
+  preamble.tex             \documentclass, packages, custom macros
+  main.tex                 variant: PhD applications
+  job_robot_research.tex   variant: robotics research roles
+  job_robot_engineer.tex   variant: robotics engineering roles
+  sections/*.tex           the content, single source of truth
+  build/                   latexmk scratch (gitignored)
 ```
 
-A **variant file** (`cv-*.tex`) is thin — a variant name, the preamble, and an ordered
-list of sections. It holds no prose. All prose lives in `sections/`, written once.
+A **variant file** is thin: a `\def\cvvariant`, the preamble, and an ordered `\input`
+list. It holds no prose. All prose lives in `sections/`, written once.
 
-```latex
-% cv-research.tex
-\def\cvvariant{research}
-\input{preamble}
-\begin{document}
-\input{sections/header}
-\input{sections/education}
-\input{sections/publication}
-\input{sections/research_exp}
-\input{sections/work_exp}
-\input{sections/skills}
-\end{document}
-```
+### The three variants
 
-> **Status:** not yet split. Today there is only `source/main.tex` with an inline preamble.
-> The split is a planned mechanical refactor — `preamble.tex` + `cv-full.tex` must produce
-> a PDF identical to today's before any variant is added.
+| File | Audience | Differences |
+|---|---|---|
+| `main.tex` | PhD applications | No Technical Skills, Summary or Projects |
+| `job_robot_research.tex` | Robotics research roles | PhD ordering **plus** Technical Skills at the end |
+| `job_robot_engineer.tex` | Robotics engineering roles | Research Experience above Publications; Technical Skills directly after Education |
+
+All three are currently 2 pages with zero Overfull boxes.
 
 ## Build
 
@@ -41,7 +35,7 @@ Run **from `source/`** — every `\input` path is relative to the variant file, 
 `source/.latexmkrc` supplies the output paths.
 
 ```bash
-cd source && latexmk -interaction=nonstopmode main.tex
+cd source && latexmk -interaction=nonstopmode job_robot_engineer.tex
 ```
 
 `.latexmkrc` pins three things, so don't pass `-pdf`, `-outdir` or `-auxdir` by hand:
@@ -49,12 +43,9 @@ cd source && latexmk -interaction=nonstopmode main.tex
 - `$pdf_mode = 1` — build with **pdflatex**, not xelatex/lualatex/tectonic. The preamble
   uses the pdfTeX-only primitive `\pdfgentounicode=1` (and `\input{glyphtounicode}`) to
   keep the PDF ATS-parsable. Do not swap the engine to make a build work.
-- `$out_dir = '..'` — **the finished PDF belongs in the project root**, not in `source/`.
+- `$out_dir = '../pdf'` — **finished PDFs collect in `pdf/`**, named after their variant.
 - `$aux_dir = 'build'` — `.aux`, `.log`, `.fls`, `.out` go to `source/build/`. Read the log
-  at `source/build/main.log`. Never commit or hand-edit anything in `build/`.
-
-So `source/main.tex` produces `main.pdf` at the repo root, and each future `cv-*.tex`
-produces its own `cv-*.pdf` there alongside it.
+  at `source/build/<variant>.log`. Never commit or hand-edit anything in `build/`.
 
 Two passes are needed for `\publink` cross-references to resolve; `latexmk` handles this.
 Clean with `latexmk -C` (removes the aux dir and the root PDF).
@@ -105,9 +96,10 @@ wording. Rare. Do not reach for it before Levels 1 and 2.
 
 - **Never fork a whole variant into its own copy of the content.** Content drift is the
   exact failure this structure exists to prevent.
-- **`cv-full.tex` shows everything** (`\cvvariant` = `full` matches every tag). It is the
-  master copy used to spot content that has silently fallen out of every variant. Build it
-  alongside whichever variant you edited.
+- **Build all three after any `sections/` edit.** There is no master "shows everything"
+  variant, so content that falls out of every `\input` list is invisible until someone
+  greps for it. `\cvvariant` is currently set but unused — the `\tagged` macro is not
+  wired up yet, because every difference so far is section-level (Level 1).
 - **Tag by audience, never by company.** `research`, `industry`, `mleng` — not `deepmind`,
   `openai`. Company tags multiply without bound and end as forked copies.
 - **A `\tagged` block that empties a list breaks the build.** If every bullet inside a
@@ -175,17 +167,25 @@ publication in `publication.tex` is commented out.
 
 ## After editing
 
-Rebuild every variant the change touches, plus `cv-full.tex`, and read the log:
+Rebuild **every** variant — a change to any `sections/` file affects all three — and read
+the logs:
 
 ```bash
-cd source && for v in main; do
-  latexmk -interaction=nonstopmode "$v.tex" 2>&1 |
-    grep -iE 'error|undefined|overfull|warning' | sed "s/^/[$v] /"
+cd source && for v in main job_robot_research job_robot_engineer; do
+  latexmk -interaction=nonstopmode "$v.tex" >/dev/null 2>&1
+  echo "[$v] $(grep -oE '\([0-9]+ pages' build/$v.log | tr -d '(')" \
+       "overfull=$(grep -cE '^(Overfull|Underfull)' build/$v.log)" \
+       "undefrefs=$(grep -c 'Reference.*undefined' build/$v.log)"
 done
 ```
 
-Undefined references and Overfull `\hbox` warnings are both visible defects in the PDF.
-Confirm the page count of each variant hasn't changed unintentionally.
+All three must stay at **2 pages, overfull=0, undefrefs=0**.
 
-Current baseline: `main.tex` builds to **2 pages**, zero Overfull/Underfull boxes, one
-undefined reference (`route`, see above).
+Note that `grep -c undefined` over the log also matches a harmless pre-existing
+`Font shape OT1/cmr/bx/sc undefined` warning — match `Reference.*undefined` for real
+broken cross-references.
+
+**Reordering sections changes pagination.** Moving Research Experience above Publications
+in the engineer variant pushed Technical Skills onto a third page; moving Skills up to sit
+directly after Education fixed it (and suits that audience anyway). Always rebuild and
+check the page count after changing an `\input` order.

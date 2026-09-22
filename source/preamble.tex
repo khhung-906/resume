@@ -1,0 +1,192 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\usepackage{enumitem} 
+\usepackage{fancyhdr}
+ % page number in center of footer
+
+% Adjust margins
+\usepackage[left=0.68in,right=0.68in,top=0.8in,bottom=0.7in]{geometry}
+
+
+\input{glyphtounicode}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\small \textcolor{black}{Kuo-Han Hung · Resume}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-0pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1\vspace{-2pt}}
+  }
+}
+
+% Subitem list start and end
+\newcommand{\resumeSubItemListStart}{\begin{itemize}[leftmargin=1.em, label=-]}
+\newcommand{\resumeSubItemListEnd}{\end{itemize}}
+
+% Subitem
+\newcommand{\resumeSubItem}[1]{%
+  \item\small{#1}
+  \vspace{-1pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=1em]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+
+
+\newcommand{\resumePubItemListStart}{%
+  \begin{center} % center the block
+    \begin{minipage}{1\textwidth} % control total width
+      \begin{itemize}[leftmargin=18pt, rightmargin=0pt, parsep=3pt]%
+        \setcounter{pubCounter}{0}%
+}
+
+\newcommand{\resumePubItemListEnd}{%
+      \end{itemize}%
+    \end{minipage}%
+  \end{center}%
+  \vspace{-10pt}%
+}
+
+% counter
+\newcounter{pubCounter}
+
+% item + label
+% \newcommand{\resumePubItem}[5]{%
+%   \refstepcounter{pubCounter}% make pubCounter referenceable
+%   \item[\textbf{[\arabic{pubCounter}]}]%
+%     \label{#5}% <-- grab the just-stepped pubCounter value
+%     {%
+%       \begin{minipage}[t]{\dimexpr\linewidth}
+%         \footnotesize #1, \href{#4}{``#2.''} #3%
+%       \end{minipage}%
+%       \vspace{-1pt}%
+%     }%
+% }
+\newcommand{\resumePubItem}[5]{%
+  \refstepcounter{pubCounter}% make pubCounter referenceable
+  \item[\textbf{[\arabic{pubCounter}]}]%
+    \label{#5}% <-- grab the just-stepped pubCounter value
+    {%
+    \small 
+    \textbf{\href{#4}{#2}}\vspace{1pt}\\
+    #1\vspace{1pt}\\
+    #3\vspace{-1pt}
+    }%
+}
+
+% \newcommand{\resumePubItem}[5]{%
+%   \refstepcounter{pubCounter}% make pubCounter referenceable
+%   \item[\textbf{[\arabic{pubCounter}]}]%
+%     \label{#5}% <-- grab the just-stepped pubCounter value
+%     {%
+%       \begin{minipage}[t]{\dimexpr\linewidth}
+%         \footnotesize #1, \href{#4}{``#2.''} #3%
+%       \end{minipage}%
+%       \vspace{-1pt}%
+%     }%
+% }
+
+
+\newenvironment{cvpubs}{%
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{enumerate}[label={[\arabic*]}, leftmargin=6ex, align=left, nosep]
+}{%
+  \end{enumerate}
+}
+
+\newcommand{\cvlink}[2]{\href{#2}{\textcolor{blue}{[#1]}}}
+% Renders nothing when the target publication is absent from this variant,
+% instead of printing [??]. Needs the second latexmk pass to resolve.
+\newcommand{\publink}[1]{\ifcsname r@#1\endcsname\textcolor{blue}{[\ref{#1}]}\fi}
+
+\newcommand{\resumeSkillPair}[4]{
+  \noindent\makebox[\textwidth][s]{%
+    {\small \textbf{#1}: #2 \hfill \textbf{#3}: #4}%
+  }\\[-0pt]
+}
+
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
