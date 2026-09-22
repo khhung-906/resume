@@ -6,18 +6,9 @@
     {Stanford Artificial Intelligence Laboratory (ILIAD \& IRIS Labs)}{Sept. 2025 -- Present}
     {Graduate Researcher, Advisors: \href{https://dorsa.fyi/}{Prof. Dorsa Sadigh} \& \href{https://ai.stanford.edu/~cbfinn/}{Prof. Chelsea Finn}}{Stanford, CA}
     \resumeItemListStart
-      \resumeItem{\textbf{RL finetuning of real-time VLA policies} under inference latency. \publink{real-expo-ft}}
-      \resumeSubItemListStart
-        \resumeSubItem{Decoupled slow VLA proposals from a fast edit policy; 42\% to 97\% success on four dynamic tasks.}
-      \resumeSubItemListEnd
-      \resumeItem{\textbf{Sample-efficient RL finetuning of pretrained VLAs} in the real world. \publink{expo-ft}}
-      \resumeSubItemListStart
-        \resumeSubItem{Residual action edits and Q-guided sampling; 30/30 success with 19 min of data, code open-sourced.}
-      \resumeSubItemListEnd
-      \resumeItem{\textbf{Scaling Q-functions} with Transformers in offline RL. \publink{tql}}
-      \resumeSubItemListStart
-        \resumeSubItem{Attention entropy regularization stabilizes value functions; 43\% gain as model size grows.}
-      \resumeSubItemListEnd
+      \resumeItem{\textbf{RL finetuning of real-time VLA policies} under inference latency. Decoupled slow VLA proposals from a fast edit policy reacting to the latest observation, raising success from 42\% to 97\% on four dynamic tasks. \publink{real-expo-ft}}
+      \resumeItem{\textbf{Sample-efficient RL finetuning of pretrained VLAs} in the real world. Built a stable system with residual action edits and Q-guided sampling, reaching 30/30 success with 19 min of online data on average. \publink{expo-ft}}
+      \resumeItem{\textbf{Scaling Q-functions} with Transformers in offline RL. Introduced attention entropy regularization to stabilize and scale Transformer value functions, gaining 43\% as model size grows where prior methods fail. \publink{tql}}
       \resumeItem{\textbf{Visual representation pretraining} for reinforcement learning (ongoing).}
     \resumeItemListEnd
 
