@@ -37,9 +37,12 @@ project, Embodied AI Lab omitted), drops the Teaching and Awards sections, and s
 publications [1]-[5].
 
 `\cvdoclabel` sets the footer: `CV` for the three `*_cv` variants, `Resume` for
-`robot_resume`. `\cvvariant` drives `\tagged`, which **is** wired up in
-`preamble.tex`. It is currently used in exactly one place: the CSIE1000 teaching entry
-is `\tagged{phd}`, because only `phd_cv` has room for a second TA entry. Publications [6]
+`robot_resume`. `\cvvariant` drives `\tagged`, wired up in `preamble.tex`, and also
+`\cvalt{CV form}{resume form}` for the publication layout. Current uses: the CSIE1000
+teaching entry is `\tagged{phd}`; publications [7] and [8] are
+`\tagged{phd,research,engineer}` to keep them off the resume; the one-line awards entry
+in `education.tex` is `\tagged{resume}`; the LinkedIn link is
+`\tagged{research,engineer,resume}`. Publications [6]
 and [7] are `\tagged{phd,research,engineer}` to keep them off the resume, and the one-line
 awards entry in `education.tex` is `\tagged{resume}`.
 
